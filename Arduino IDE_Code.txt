@@ -1,0 +1,114 @@
+#include <Servo.h>
+#include <Wire.h>
+#include <LiquidCrystal.h>
+#include <SoftwareSerial.h>
+
+// GSM Module
+SoftwareSerial sim800(11, 10); // RX, TX
+
+// Servo
+Servo myServo;
+
+// LCD Display
+LiquidCrystal lcd(9,8,7,6,5,4); 
+
+// Gas sensor (MQ-2, for example)
+const int gasSensorPin = A0;
+const int threshold = 170; // Adjust as needed
+const int buzzerPin = 3;
+const int fan=13;
+const int relayPin=13;
+
+
+void setup() {
+  // Start communication with Arduino components
+Serial.begin(9600);
+sim800.begin(9600);
+lcd.begin(16,2);
+pinMode(gasSensorPin, INPUT);
+lcd.print (" Gas Leakage ");
+lcd.setCursor(0,1);
+lcd.print (" Detector Alarm ");
+delay(3000);
+lcd.clear();
+
+
+
+  // Initialize Servo
+  myServo.attach(12);
+
+  // Initialize Buzzer
+  pinMode(buzzerPin, OUTPUT);
+  //Initialise fan
+  pinMode(fan, OUTPUT);
+  //Initialise RelayPin
+  // pinMode(relayPin, OUTPUT);  
+
+  // Display initial message
+  lcd.setCursor(0, 0);
+  lcd.println("Gas Detector");
+  lcd.println("Dialing...");
+
+  sim800.println("ATD+7001435231;");
+}
+
+void loop() {
+  // Read the gas sensor value
+  int gasValue = analogRead(gasSensorPin);
+
+  // Display the gas sensor value on the LCD
+  Serial.print("Gas Level: ");
+Serial.println(gasValue);
+  lcd.setCursor(0, 1);
+  lcd.print("Gas: ");
+  lcd.print(gasValue);
+  delay(1000);
+ 
+
+  if (gasValue > threshold) {
+    // Trigger buzzer
+    digitalWrite(buzzerPin, HIGH);
+    digitalWrite(fan,LOW);
+    digitalWrite(relayPin, LOW);
+    Serial.print("Gas detect alarm");
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.println("Gas Level Exceed");
+    lcd.setCursor(0,1);
+    lcd.print("SMS Sent");
+    delay(1000);
+    // Send SMS via GSM
+    sim800.println("AT+CMGF=1"); // Set to text mode
+    delay(100);
+    sim800.println("AT+CMGS=\"+917001435231\""); // Replace with target phone number
+    delay(100);
+   lcd.print("Gas detected! Level: ");
+    sim800.println("Excess Gas Detected. Open Windows");
+    sim800.print(gasValue);
+    sim800.write(26); // Send CTRL+Z to send the message
+   
+    
+
+    // Move servo to trigger a vent (example: open a window)
+    myServo.write(90);
+
+    // Keep the alert for a few seconds
+    delay(10000);
+  }
+  else {
+    myServo.write(0);
+    //Reset Fan
+    digitalWrite(fan,HIGH);
+    digitalWrite(relayPin, HIGH); // Turn off relay
+    // Reset buzzer
+    digitalWrite(buzzerPin, LOW);
+    Serial.print(" Gas Level Low");
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print(" Gas Level Normal");
+    delay(1000);
+   
+  }
+
+  delay(1000); // Loop every second
+}
