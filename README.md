@@ -1,8 +1,10 @@
 # Integrated-Gas-Leak-Detection-and-Alert-System
-🔍 Project Overview
-This project is a real-time gas leakage detection and alert system designed for residential, industrial, and commercial use. It uses sensors, microcontrollers, and communication modules to detect the presence of hazardous gases like LPG, methane, carbon monoxide, and ammonia, and responds with audible, visual, and digital alerts to prevent accidents.
+🔍 **Project Overview**
 
-🧠 Key Components
+This project is a real-time gas leakage detection and alert system designed for use in residential, industrial, and commercial settings. It uses sensors, microcontrollers, and communication modules to detect the presence of hazardous gases like LPG, methane, carbon monoxide, and ammonia, and responds with audible, visual, and digital alerts to prevent accidents.
+
+🧠 **Key Components**
+
 MQ-135 Gas Sensor – Detects various harmful gases.
 
 Arduino UNO – Processes sensor data and controls the system.
@@ -15,7 +17,8 @@ Relay Module – Automatically cuts off gas and power supply to prevent accident
 
 IoT (Blynk App) – Optional remote monitoring and alert system via smartphone.
 
-⚙️ Working Process
+⚙️ **Working Process**
+
 MQ-135 continuously monitors air for gas concentration.
 
 If gas exceeds a safe threshold, Arduino:
@@ -28,7 +31,8 @@ Uses relay to turn off the gas regulator and electrical supply.
 
 Optionally, data can be sent to the Blynk IoT app for real-time cloud monitoring and notifications.
 
-💡 Features
+💡 **Features**
+
 Real-time gas leak detection
 
 Auto shut-off for gas and electricity
@@ -39,7 +43,8 @@ IoT support via Blynk (mobile app)
 
 Low-cost and easy to implement
 
-🛠️ Technologies Used
+🛠️ **Technologies Used**
+
 Arduino IDE
 
 Embedded C / C++
@@ -50,14 +55,16 @@ GSM Communication
 
 Sensor Integration
 
-📱 Future Scope
-Add temperature & flame sensors for extended safety
+📱 **Future Scope**
 
-Integrate Wi-Fi for more advanced cloud features
+Add temperature & flame sensors for extended safety.
 
-Enable mobile app controls and analytics dashboard
+Integrate Wi-Fi for more advanced cloud features.
 
-🔗 Project Status
+Enable mobile app controls and analytics dashboard.
+
+🔗 **Project Status**
+
 ✅ Working Prototype Developed
 📤 Ready for GitHub Upload
 📱 Optional IoT Interface via Blynk App
