@@ -66,5 +66,7 @@ Enable mobile app controls and analytics dashboard.
 🔗 **Project Status**
 
 ✅ Working Prototype Developed
+
 📤 Ready for GitHub Upload
+
 📱 Optional IoT Interface via Blynk App
